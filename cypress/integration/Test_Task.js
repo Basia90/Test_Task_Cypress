@@ -1,41 +1,24 @@
+import Test_Task_PO from '../support/page_objects/Test_Task_PO'
 /// <reference types='Cypress' /> 
 
-describe('Validation of forms', () => {
+describe('Validation of forms when ordering a package', () => {
+    const accessorder_PO = new Test_Task_PO()
+    const product_PO = new Test_Task_PO()
+    const requiredconditions_PO = new Test_Task_PO
+    const deliverypoint_PO = new Test_Task_PO
 
-    it('Validation of forms when ordering a package', () => {
-        cy.visit('/')
-        cy.get("input[name='parcelWeight']").type('12')
-        cy.get('.btn.btn-primary.btn-block.mt-3').click()
-        cy.get('.btn.font-weight-bold.btn-primary.height-fit-content.ng-scope').eq(0).click()
-        cy.get('.custom-control-label.ng-scope').eq(1).click()
-        cy.get('#NOVA_POSHTA').click({force: true})
-        cy.get("input[type='search']").type('Chornobai, vul. Cherkaska, 18')
-        cy.get('.option').first().click()
-        cy.get('.card-body.ng-binding').should('contain', 'Maksymalna waga')
-        cy.get('#senderName').type('Mobisense Monika Mazurek')
-        cy.get('#senderPostalCode').type('25-663')
-        cy.get('#senderCity').type('Kielce')
-        cy.get('#senderStreet').type('Olszewskiego')
-        cy.get('#senderHouseNumber').type('6')
-        cy.get('#senderFlatNumber').type('313')
-        cy.get('#senderPhone').type('664540929')
-        cy.get('#senderEmail').type('monika@sourceful.nl')
-        cy.get('#receiverName').type('Наталья Иванова')
-        cy.get('#receiverPhone').type('505032236')
-        cy.get('#receiverEmail').type('natalia@ivanowa.pl')
-        cy.get('#parcelItemDescription').type('Czekoladki')
-        cy.get('#parcelItemQuantity').type('2')
-        cy.get('#parcelItemWeight').type('10')
-        cy.get('#parcelItemValueClientCurrency').type('20')
-        cy.get('.pl-0.btn-sm.btn-link.ng-scope').eq(2).click()
-        cy.get("input[name='parcelItemDescription-1']").type('Kubek')
-        cy.get("input[name='parcelItemQuantity-1']").type('1')
-        cy.get("input[name='parcelItemWeight-1']").type('2')
-        cy.get("input[name='parcelItemValueClientCurrency-1']").type('5')
-        cy.get('#orderFormRegulation').click({force: true})
-        cy.get('#orderProhibitedGoods').click({force: true})
-        cy.get('#orderFormRegulation2').click({force: true})
-        cy.get('#orderFormRegulation3').click({force: true})
+    beforeEach(function() {
+        accessorder_PO.accessOrder()
+    });
+
+    it('Ordering an InPost package', () => {
+        deliverypoint_PO.FirstDeliveryPoint()
+        cy.sender_data()
+        cy.recipient_data('Наталья Иванова', '505032236', 'natalia@ivanowa.pl')
+        product_PO.FirstProduct()
+        product_PO.SecondProduct()
+        cy.get("input[name='totalValue']").should('have.value', '25.00')
+        requiredconditions_PO.RequiredConditions()
         cy.get('#btn_next_step').click()
     });
 })
