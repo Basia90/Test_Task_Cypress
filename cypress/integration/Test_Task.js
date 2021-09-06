@@ -39,9 +39,3 @@ describe('Validation of forms', () => {
         cy.get('#btn_next_step').click()
     });
 })
-
-//responsywność
-//globalnie do całych testów zmienić w cypress.json 
-//viewportHeight:660
-//viewportWidth:1000
-//lolaknie w teście: cy.viewport 
