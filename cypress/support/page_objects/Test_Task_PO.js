@@ -1,6 +1,6 @@
 class Test_Task_PO {
     accessOrder() {
-        cy.visit('/')
+        cy.visit('https://paczkadoukrainy.pl/')
         cy.get("input[name='parcelWeight']").type('12')
         cy.get('.btn.btn-primary.btn-block.mt-3').click()
         cy.url().should('include', 'weight=120')

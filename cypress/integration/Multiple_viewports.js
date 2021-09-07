@@ -1,17 +1,13 @@
 import Test_Task_PO from '../support/page_objects/Test_Task_PO'
 /// <reference types='Cypress' /> 
 
-const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
+const sizes = ['iphone-6', 'samsung-s10', [1024, 768]]
 
 describe('Ordering an InPost package', () => {
     const accessorder_PO = new Test_Task_PO()
     const product_PO = new Test_Task_PO()
     const requiredconditions_PO = new Test_Task_PO
     const deliverypoint_PO = new Test_Task_PO
-
-    beforeEach(function () {
-        accessorder_PO.accessOrder()
-    });
 
     sizes.forEach((size) => {
 
@@ -21,7 +17,7 @@ describe('Ordering an InPost package', () => {
             } else {
                 cy.viewport(size)
             }
-
+            accessorder_PO.accessOrder()
             deliverypoint_PO.FirstDeliveryPoint()
             cy.sender_data()
             cy.recipient_data('Наталья Иванова', '505032236', 'natalia@ivanowa.pl')
