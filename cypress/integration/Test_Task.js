@@ -20,5 +20,6 @@ describe('Validation of forms when ordering a package', () => {
         cy.get("input[name='totalValue']").should('have.value', '25.00')
         requiredconditions_PO.RequiredConditions()
         cy.get('#btn_next_step').click()
+        cy.get('.btn.btn-block.btn-primary.ng-scope').click()
     });
 })
